@@ -30,7 +30,8 @@ class UsersController < ApplicationController
   
   def create
     @new_user = User.new(secure_params)
-    redirect_to @new_user, :notice => "User created."
+    @new_user.save
+    redirect_to users_path, :notice => "User created."
     
   end
 
