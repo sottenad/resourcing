@@ -16,6 +16,30 @@ ActiveRecord::Schema.define(version: 20140531175127) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "project_statuses", force: true do |t|
+    t.string "title"
+  end
+
+  create_table "projects", force: true do |t|
+    t.string  "title"
+    t.string  "number"
+    t.integer "budget_currency"
+    t.integer "budget_hours"
+    t.integer "user_id"
+    t.integer "project_status_id"
+  end
+
+  add_index "projects", ["project_status_id"], name: "index_projects_on_project_status_id", using: :btree
+  add_index "projects", ["user_id"], name: "index_projects_on_user_id", using: :btree
+
+  create_table "user_groups", force: true do |t|
+    t.string "title"
+  end
+
+  create_table "user_statuses", force: true do |t|
+    t.string "title"
+  end
+
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
@@ -36,9 +60,14 @@ ActiveRecord::Schema.define(version: 20140531175127) do
     t.string   "unconfirmed_email"
     t.integer  "role"
     t.string   "first_name"
+    t.string   "last_name"
+    t.integer  "user_group_id"
+    t.integer  "user_status_id"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+  add_index "users", ["user_group_id"], name: "index_users_on_user_group_id", using: :btree
+  add_index "users", ["user_status_id"], name: "index_users_on_user_status_id", using: :btree
 
 end

@@ -1,9 +1,11 @@
 class UsersController < ApplicationController
   before_filter :authenticate_user!
-  after_action :verify_authorized, except: [:show]
+  #after_action :verify_authorized, except: [:show]
 
   def index
     @users = User.all
+    @new_user = User.new()
+    
     authorize @users
   end
 
@@ -25,6 +27,12 @@ class UsersController < ApplicationController
       redirect_to users_path, :alert => "Unable to update user."
     end
   end
+  
+  def create
+    @new_user = User.new(secure_params)
+    redirect_to @new_user, :notice => "User created."
+    
+  end
 
   def destroy
     user = User.find(params[:id])
@@ -40,7 +48,7 @@ class UsersController < ApplicationController
   private
 
   def secure_params
-    params.require(:user).permit(:role)
+    params.require(:user).permit(:role,:email)
   end
 
 end

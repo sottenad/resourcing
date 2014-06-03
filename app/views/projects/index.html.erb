@@ -1,0 +1,7 @@
+<h1>Project#index</h1>
+<% @projects.each do |p| %>
+<p><%= p.title %> - <%= link_to "view", project_path(p) %> - <%= link_to "delete", p, :method=>:delete %></p>
+
+<% end %>
+
+<%= link_to "new project", new_project_path %>

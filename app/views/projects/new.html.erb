@@ -1,0 +1,8 @@
+<h1>Project#new</h1>
+
+<%= simple_form_for(@project, html: {class: 'form-horizontal' }) do |f| %>
+	<%= f.input :title %>
+	<%= f.input :number %>
+	<%= f.input :budget_currency %>
+	<%= f.submit "Submit" %>
+<% end %>
