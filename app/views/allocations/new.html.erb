@@ -1,2 +1,5 @@
 <h1>New Allocation</h1>
 <%= render 'form' %>
+
+
+User.new({:email => "sottenad@gmail.com", :roles => ["admin"], :password => "stepheno", :password_confirmation => "stepheno" }).save(:validate=>false)
