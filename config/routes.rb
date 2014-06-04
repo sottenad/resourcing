@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+	resources 'allocations'
+
 	resources 'projects'
 	
 	root :to => "visitors#index"

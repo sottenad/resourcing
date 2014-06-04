@@ -1,7 +1,8 @@
 <div class="container">
   <div class="row">
+    
+    <div class="col-sm-7">
     <h3>Users</h3>
-    <div class="column">
       <table class="table">
         <tbody>
           <% @users.each do |user| %>
@@ -12,9 +13,11 @@
         </tbody>
       </table>
     </div>
-    <div class="">
-
+    <div class="col-sm-5">
+    	<h4>New User</h4>
 	    <%= simple_form_for(@new_user, html: {class:'form-horizontal'}) do |f| %>
+	    	<%= f.input :first_name %>
+	    	<%= f.input :last_name %>
 	    	<%= f.input :email %>
 	    	<%= f.button :submit %>
 	    <% end %>

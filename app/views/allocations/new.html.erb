@@ -1,0 +1,9 @@
+<h1>Allocations#new</h1>
+<%= simple_form_for(@allocation) do |f| %>
+	<%=f.input :start_date %>
+	<%=f.input :end_date %>	
+	<%=f.input :hours_per_day%>
+	<%=f.association :user, :label_method => :email, :value_method => :id%>
+	<%=f.association :project, :label_method => :title, :value_method => :id%>
+	<%= f.submit "Create Allocation" %>
+<%end%>

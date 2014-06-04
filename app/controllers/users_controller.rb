@@ -3,6 +3,7 @@ class UsersController < ApplicationController
   #after_action :verify_authorized, except: [:show]
 
   def index
+  
     @users = User.all
     @new_user = User.new()
     
