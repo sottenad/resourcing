@@ -1,0 +1,10 @@
+<%= simple_form_for(@allocation) do |f| %>
+	<%=f.association :user, :label_method => :email, :value_method => :id%>
+	<%=f.association :project, :label_method => :title, :value_method => :id%>
+	<%=f.input :hours_per_day%>
+	
+	<%=f.input :start_date, input_html: { class:'datepicker', 'data-date-format' => "YYYY/MM/DD" }, :as => :string%>
+	<%=f.input :end_date, input_html: { class:'datepicker', 'data-date-format' => "YYYY/MM/DD" }, :as => :string%>	
+	<br />
+	<%= f.submit "Create Allocation" %>
+<%end%>

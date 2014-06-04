@@ -1,6 +1,6 @@
 <h1>Allocations</h1>
 <% @allocations.each do |a| %>
-	<%= a.user.email %> on <%= a.project.title %> for <%= a.duration_in_days %>  <%= link_to "Delete", a, :method=>:delete %><br />
+	<%= a.user.email %> on <%= a.project.title %> for <%= a.duration_in_days %> - <%= link_to 'Show', allocation_path(a) %> - <%= link_to "Delete", a, :method=>:delete %><br />
 <% end %>
 
 <%= link_to "New Allocation", new_allocation_path %>

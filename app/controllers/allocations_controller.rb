@@ -1,7 +1,6 @@
 class AllocationsController < ApplicationController
   def index
-  	@allocations = Allocation.all
-  	  
+  	@allocations = Allocation.all.includes(:user).order("users.email desc")
   end
 
 
@@ -19,6 +18,13 @@ class AllocationsController < ApplicationController
   	flash[:notice] = "Allocation deleted."
   	
   	@allocation.destroy  
+  	redirect_to allocations_path
+  end
+  
+  def update
+  	@allocation = Allocation.find(params[:id])
+  	@allocation.update(allocation_params)
+  	flash[:notice] = "Allocation Changed"
   	redirect_to allocations_path
   end
 

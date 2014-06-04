@@ -16,6 +16,8 @@ gem 'pundit'
 gem 'simple_form'
 gem 'thin'
 gem 'figaro'
+gem 'momentjs-rails', '~> 2.5.0'
+gem 'bootstrap3-datetimepicker-rails', '~> 3.0.0'
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller', :platforms=>[:mri_21]
