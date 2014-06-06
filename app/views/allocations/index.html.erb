@@ -1,6 +1,21 @@
 <h1>Allocations</h1>
+
+	<form class="filter_form">
+		<%= collection_select(:email, :value, @all_users, :email, :email, :selected => @selected_email) %>
+		<input type="submit" value="Filter" />
+	</form>
 <% @allocations.each do |a| %>
-	<%= a.user.email %> on <%= a.project.title %> for <%= a.duration_in_days %> - <%= link_to 'Show', allocation_path(a) %> - <%= link_to "Delete", a, :method=>:delete %><br />
+<div class="col-sm-2">
+	<p>
+	<strong><%= a.user.email %></strong><br />
+	<%= a.project.title %> <br />
+	<%= a.duration_in_days %>
+	</p>
+	<div class="btn-group">
+	<%= link_to 'Show', allocation_path(a), :class=>"btn btn-default btn-xs" %> 
+	<%= link_to "Delete", a, :method=>:delete, :class=>"btn btn-default btn-xs" %>
+	</div>
+</div>
 <% end %>
 
 <%= link_to "New Allocation", new_allocation_path %>

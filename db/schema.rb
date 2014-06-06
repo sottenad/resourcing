@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140604063209) do
+ActiveRecord::Schema.define(version: 20140606053009) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,6 +39,20 @@ ActiveRecord::Schema.define(version: 20140604063209) do
 
   add_index "projects", ["project_status_id"], name: "index_projects_on_project_status_id", using: :btree
   add_index "projects", ["user_id"], name: "index_projects_on_user_id", using: :btree
+
+  create_table "subscription_types", force: true do |t|
+    t.string  "subscription_name"
+    t.integer "price"
+    t.text    "description"
+  end
+
+  create_table "subscriptions", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "subscription_type_id"
+  end
+
+  add_index "subscriptions", ["subscription_type_id"], name: "index_subscriptions_on_subscription_type_id", using: :btree
 
   create_table "user_groups", force: true do |t|
     t.string "title"
@@ -71,10 +85,12 @@ ActiveRecord::Schema.define(version: 20140604063209) do
     t.string   "last_name"
     t.integer  "user_group_id"
     t.integer  "user_status_id"
+    t.integer  "subscription_id"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+  add_index "users", ["subscription_id"], name: "index_users_on_subscription_id", using: :btree
   add_index "users", ["user_group_id"], name: "index_users_on_user_group_id", using: :btree
   add_index "users", ["user_status_id"], name: "index_users_on_user_status_id", using: :btree
 

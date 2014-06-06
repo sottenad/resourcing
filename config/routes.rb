@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
-	resources 'allocations'
 
+	resources 'subscription_types'
+	resources 'allocations'
+	resources 'subscriptions'
 	resources 'projects'
+
 	
 	root :to => "visitors#index"
 
@@ -10,5 +13,6 @@ Rails.application.routes.draw do
 	end
 	devise_for :users, :controllers => { :confirmations => "confirmations" }
 	resources :users	
-  
+	
+
 end

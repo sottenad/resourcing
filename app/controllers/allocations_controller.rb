@@ -1,6 +1,25 @@
 class AllocationsController < ApplicationController
   def index
-  	@allocations = Allocation.all.includes(:user).order("users.email desc")
+  	
+  	
+  	if(params[:email].nil?)
+  		@allocations = Allocation.all.includes(:user).order("users.email desc")
+  		@email_selected = User.first.email
+  	else
+  		@allocations = Allocation.joins(:user).where("users.email = ?", params[:email][:value])  	
+  		@email_selected = params[:email][:value]
+  	end
+  	
+
+  	
+  	
+  	@all_users = User.all.uniq
+  	@all_projects = Project.all
+  	
+  	respond_to do |format|
+  		format.html
+  		format.json {render json:@allocations}
+  	end
   end
 
 

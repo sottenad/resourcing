@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Subscription name:</strong>
+  <%= @subscription_type.subscription_name %>
+</p>
+
+<p>
+  <strong>Price:</strong>
+  <%= @subscription_type.price %>
+</p>
+
+<%= link_to 'Edit', edit_subscription_type_path(@subscription_type) %> |
+<%= link_to 'Back', subscription_types_path %>

@@ -1,0 +1,7 @@
+<h1>Subscription#new</h1>
+User: <%= current_user.email %>
+<%= simple_form_for(@subscription) do |f| %>
+	<%= f.input :subscription_type, :collection => SubscriptionType.all, :label_method => :subscription_name, :value_method => :id%>
+	<%= f.input :user_id, :as=>:hidden, :input_html => {value: current_user.id} %>
+	<%= f.submit %>
+<% end %>
