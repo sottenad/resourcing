@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140606053009) do
+ActiveRecord::Schema.define(version: 20140607042315) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,18 +41,23 @@ ActiveRecord::Schema.define(version: 20140606053009) do
   add_index "projects", ["user_id"], name: "index_projects_on_user_id", using: :btree
 
   create_table "subscription_types", force: true do |t|
-    t.string  "subscription_name"
-    t.integer "price"
-    t.text    "description"
+    t.string   "title"
+    t.integer  "price"
+    t.string   "stripe_plan_id"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "subscriptions", force: true do |t|
+    t.integer  "subscription_type_id"
+    t.integer  "user_id"
+    t.boolean  "active"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "subscription_type_id"
   end
 
-  add_index "subscriptions", ["subscription_type_id"], name: "index_subscriptions_on_subscription_type_id", using: :btree
+  add_index "subscriptions", ["user_id"], name: "index_subscriptions_on_user_id", unique: true, using: :btree
 
   create_table "user_groups", force: true do |t|
     t.string "title"
@@ -86,6 +91,7 @@ ActiveRecord::Schema.define(version: 20140606053009) do
     t.integer  "user_group_id"
     t.integer  "user_status_id"
     t.integer  "subscription_id"
+    t.string   "stripeid"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

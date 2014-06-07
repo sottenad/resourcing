@@ -1,7 +1,13 @@
-<h1>Subscription#new</h1>
-User: <%= current_user.email %>
-<%= simple_form_for(@subscription) do |f| %>
-	<%= f.input :subscription_type, :collection => SubscriptionType.all, :label_method => :subscription_name, :value_method => :id%>
-	<%= f.input :user_id, :as=>:hidden, :input_html => {value: current_user.id} %>
-	<%= f.submit %>
+<div class="container">
+<h1>New <%= @subscription_type.title %> Subscription</h1>
+
+<% @subscription.errors.full_messages.each do |msg| %>
+      <p><%= msg %></p>
 <% end %>
+<div class="well">
+	<p>Price: $<%= @subscription_type.price %>.00/Month</p>
+	<p>30 day free trial included</p>
+</div>
+
+<%= render :partial => "subscriptions/form" , :locals => {:subscription_id => @subscription_type.id} %>
+</div>

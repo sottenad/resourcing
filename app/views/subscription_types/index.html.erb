@@ -12,7 +12,7 @@
   <tbody>
     <% @subscription_types.each do |subscription_type| %>
       <tr>
-        <td><%= subscription_type.subscription_name %></td>
+        <td><%= subscription_type.title %></td>
         <td><%= subscription_type.price %></td>
         <td><%= link_to 'Show', subscription_type %></td>
         <td><%= link_to 'Edit', edit_subscription_type_path(subscription_type) %></td>

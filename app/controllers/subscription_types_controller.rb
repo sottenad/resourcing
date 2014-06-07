@@ -1,4 +1,8 @@
 class SubscriptionTypesController < ApplicationController
+  before_filter :authenticate_user!
+  before_filter do 
+    redirect_to root_path unless current_user && current_user.admin?
+  end
   before_action :set_subscription_type, only: [:show, :edit, :update, :destroy]
 
   # GET /subscription_types
@@ -69,6 +73,6 @@ class SubscriptionTypesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def subscription_type_params
-      params.require(:subscription_type).permit(:subscription_name, :price)
+      params.require(:subscription_type).permit(:title, :price)
     end
 end

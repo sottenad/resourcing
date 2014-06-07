@@ -1,7 +1,8 @@
 class AllocationsController < ApplicationController
-  def index
-  	
-  	
+  before_filter :authenticate_user!
+  before_filter :ensure_subscription
+  
+  def index	
   	if(params[:email].nil?)
   		@allocations = Allocation.all.includes(:user).order("users.email desc")
   		@email_selected = User.first.email
@@ -9,9 +10,6 @@ class AllocationsController < ApplicationController
   		@allocations = Allocation.joins(:user).where("users.email = ?", params[:email][:value])  	
   		@email_selected = params[:email][:value]
   	end
-  	
-
-  	
   	
   	@all_users = User.all.uniq
   	@all_projects = Project.all
@@ -58,5 +56,8 @@ class AllocationsController < ApplicationController
 	def allocation_params
 		params.require(:allocation).permit(:start_date, :end_date, :hours_per_day, :user_id, :project_id)
 	end
+	
+
+	
 	
 end

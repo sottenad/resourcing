@@ -1,6 +1,5 @@
 class User < ActiveRecord::Base
 
-  # Added by Koudoku.
   has_one :subscription
 
 

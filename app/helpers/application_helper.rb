@@ -11,6 +11,13 @@ module ApplicationHelper
     HTML
     html.html_safe
   end
-
+  
+  def has_subscription
+  	if(!current_user.subscription || !current_user.subscription.active)
+	  	return false
+	else
+		return true
+	end
+  end
 
 end

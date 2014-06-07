@@ -1,4 +1,7 @@
 class ApplicationController < ActionController::Base
+  #include the application helper - some conditional helpers here
+  include ApplicationHelper
+  
   include Pundit
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
@@ -21,5 +24,12 @@ class ApplicationController < ActionController::Base
     flash[:alert] = "Access denied."
     redirect_to (request.referrer || root_path)
   end
-
+  
+	protected
+	def ensure_subscription
+		if(!current_user.subscription || !current_user.subscription.active)
+			flash[:notice] = "Access Denied"
+			redirect_to root_path
+		end
+	end
 end

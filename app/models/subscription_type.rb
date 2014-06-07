@@ -1,3 +1,3 @@
 class SubscriptionType < ActiveRecord::Base
-	belongs_to :subscription
+	has_many :subscriptions
 end

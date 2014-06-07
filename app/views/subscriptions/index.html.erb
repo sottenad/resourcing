@@ -1,6 +1,16 @@
-<h1>Subscription#index</h1>
-<%= link_to "New Subscription", new_subscription_path %>
-<% @subscriptions.each do |s| %>
-
-
+<h1>Subscriptions</h1>
+<% if(!current_user.subscription) %>
+	<% @subscription_types.each do |s| %>
+		<%= link_to "New "+s.title+" Subscription", new_subscription_path(:plan => s.id) %>: $<%= s.price %>.00<br />
+	<% end %>
 <% end %>
+<ul>
+<% @subscriptions.each do |s| %>
+	<li><%= s.subscription_type.title %>: $<%= s.subscription_type.price %><br />
+	<%= s.user.email %> - Active: <%= s.active %><br />
+	<%= link_to "Edit", edit_subscription_path(s) %>
+	<%= link_to "Delete", s, :method => :delete %>
+	
+	</li>
+<% end %>
+</ul>
