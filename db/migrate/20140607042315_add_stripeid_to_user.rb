@@ -1,5 +1,8 @@
 class AddStripeidToUser < ActiveRecord::Migration
-  def change
-    add_column :users, :stripeid, :string
+  def up
+    add_column :users, :stripe_customer_id, :string
+  end
+  def down
+    remove_column :users, :stripe_customer_id, :string
   end
 end

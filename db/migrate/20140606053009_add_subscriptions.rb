@@ -11,6 +11,9 @@ class AddSubscriptions < ActiveRecord::Migration
   	create_table :subscriptions do |t|
   		t.integer :subscription_type_id
   		t.integer :user_id
+  		t.string :stripe_subscription_id
+  		t.integer :trial_start
+  		t.integer :trial_end
   		t.boolean :active
 	  	t.timestamps
   	end

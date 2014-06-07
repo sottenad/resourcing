@@ -5,6 +5,7 @@ Rails.application.routes.draw do
 	resources 'subscriptions'
 	resources 'projects'
 
+	mount StripeEvent::Engine => '/stripe-hooks'
 	
 	root :to => "visitors#index"
 

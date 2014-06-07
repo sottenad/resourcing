@@ -19,6 +19,7 @@ gem 'figaro'
 gem 'momentjs-rails', '~> 2.5.0'
 gem 'bootstrap3-datetimepicker-rails', '~> 3.0.0'
 gem 'stripe', :git => 'https://github.com/stripe/stripe-ruby'
+gem 'stripe_event'
 
 group :development do
   gem 'better_errors'

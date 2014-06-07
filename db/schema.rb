@@ -52,6 +52,9 @@ ActiveRecord::Schema.define(version: 20140607042315) do
   create_table "subscriptions", force: true do |t|
     t.integer  "subscription_type_id"
     t.integer  "user_id"
+    t.string   "stripe_subscription_id"
+    t.integer  "trial_start"
+    t.integer  "trial_end"
     t.boolean  "active"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -91,7 +94,7 @@ ActiveRecord::Schema.define(version: 20140607042315) do
     t.integer  "user_group_id"
     t.integer  "user_status_id"
     t.integer  "subscription_id"
-    t.string   "stripeid"
+    t.string   "stripe_customer_id"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

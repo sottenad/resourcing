@@ -47,13 +47,15 @@ before_filter :prevent_duplicate_subscription, :only => [:new, :create]
 	  :plan => "basic",
 	  :email => current_user.email
 	)
-	current_user.update({:stripeid => customer.id})
+	current_user.update({:stripe_customer_id => customer.id})
 	current_user.save
 	
   	@subscription = Subscription.new(subscription_params)
   	@subscription.user = current_user
   	@subscription.active = true
   	@subscription.save
+  	
+  	#Check stripe initializer for webhook to record subscription_id
   	
   	if @subscription.errors.any?
 	  	#TODO: add error messaging and logging
