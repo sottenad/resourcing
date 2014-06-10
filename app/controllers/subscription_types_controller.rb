@@ -60,7 +60,7 @@ class SubscriptionTypesController < ApplicationController
   def destroy
     @subscription_type.destroy
     respond_to do |format|
-      format.html { redirect_to subscription_type_index_url, notice: 'Subscription types was successfully destroyed.' }
+      format.html { redirect_to subscription_types_path, notice: 'Subscription types was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -73,6 +73,6 @@ class SubscriptionTypesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def subscription_type_params
-      params.require(:subscription_type).permit(:title, :price)
+      params.require(:subscription_type).permit(:title, :price, :stripe_plan_id, :description)
     end
 end

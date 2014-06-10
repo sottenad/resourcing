@@ -3,8 +3,8 @@
 	<%=f.association :project, :label_method => :title, :value_method => :id%>
 	<%=f.input :hours_per_day%>
 	
-	<%=f.input :start_date, input_html: { class:'datepicker', 'data-date-format' => "YYYY/MM/DD" }, :as => :string%>
-	<%=f.input :end_date, input_html: { class:'datepicker', 'data-date-format' => "YYYY/MM/DD" }, :as => :string%>	
+	<%=f.input :start_date, input_html: {  'data-behaviour' => 'datepicker', :value => localize(f.object.start_date || Time.now, :format => "%m/%d/%Y")}, :as => :string%>
+	<%=f.input :end_date, input_html: { 'data-behaviour' =>'datepicker', :value => localize(f.object.end_date || Time.now, :format => "%m/%d/%Y")}, :as => :string%>	
 	<br />
 	<%= f.submit "Create Allocation" %>
 <%end%>

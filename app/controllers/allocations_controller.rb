@@ -40,13 +40,21 @@ class AllocationsController < ApplicationController
   
   def update
   	@allocation = Allocation.find(params[:id])
-  	@allocation.update(allocation_params)
+  	
+  	new_allocation_params = allocation_params
+  	new_allocation_params[:start_date] = Date.strptime(allocation_params[:start_date],'%m/%d/%Y')
+  	new_allocation_params[:end_date] = Date.strptime(allocation_params[:end_date],'%m/%d/%Y')
+
+  	@allocation.update(new_allocation_params)
   	flash[:notice] = "Allocation Changed"
   	redirect_to allocations_path
   end
 
   def create
-  	@allocation = Allocation.new(allocation_params)
+  	new_allocation_params = allocation_params
+  	new_allocation_params[:start_date] = Date.strptime(allocation_params[:start_date],'%m/%d/%Y')
+  	new_allocation_params[:end_date] = Date.strptime(allocation_params[:end_date],'%m/%d/%Y')
+  	@allocation = Allocation.new(new_allocation_params)
   	@allocation.save
   	redirect_to allocations_path
   end

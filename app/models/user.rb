@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
 
-  has_one :subscription
+  validates :first_name, :last_name, :email, :presence => true
 
 
   # Include default devise modules. Others available are:
@@ -9,11 +9,21 @@ class User < ActiveRecord::Base
   #:registerable,
    :confirmable, :recoverable, :rememberable, :trackable, :validatable
   enum role: [:user, :vip, :admin]
+  
   after_initialize :set_default_role, :if => :new_record?
+  before_destroy :delete_allocations
 
   has_one :user_status
   has_one :user_group
+  has_one :subscription
+  # belongs_to :account
   has_many :allocations
+  
+  acts_as_tenant(:account)
+
+  def delete_allocations
+  	Allocation.destroy_all(:user => self)
+  end
   
   def set_default_role
     self.role ||= :user
@@ -52,6 +62,13 @@ class User < ActiveRecord::Base
   def self.create_new_user(email)
     user = User.new({ :email => email })
     return user.save
+  end
+  
+  #Get this users card(s)
+  def get_cards
+	  customer = Stripe::Customer.retrieve(stripe_customer_id)
+	  puts customer.cards
+	  return customer.cards
   end
 	
 end

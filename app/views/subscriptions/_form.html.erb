@@ -1,45 +1,67 @@
 <div class="col-sm-6">
-	<%= simple_form_for(@subscription) do |f| %>
 	
+	
+		  <% if @subscription_type.price > 0 %>
 		  
-		  <% if defined?(subscription_id) %>
-			  <%= f.input :subscription_type_id, :as => :hidden,  :input_html => {:value => subscription_id} %>
-	      <% end %>
-		  <span class="payment-errors"></span>
-		
-		  <div class="control-group">
-		    <label class="control-label">Card Number</label>
-		    <div class="controls">
-		    	<input type="text" size="20" data-stripe="number"/>
-		    </div>
-		  </div>
-		
-		  <div class="control-group">
-		    <label class="control-label">CVC</label>
-		    <div class="controls">
-		    	<input type="text" size="4" data-stripe="cvc"/>
-		    </div>
-		  </div>
-		
-		  <div class="control-group">
-		    <label class="control-label">Expiration (MM/YYYY)</label>
-		    <div class="controls">
-				<%= select_month nil, {add_month_numbers: true}, {name: nil, id: "card_month", data: {:stripe => 'exp-month' }} %>
-				<%= select_year nil, {start_year: Date.today.year, end_year: Date.today.year+15}, {name: nil, id: "card_year", data: {:stripe => 'exp-year' }}  %>	    
-			</div>
-		  </div>
-		
-	
-	
-		
-		<% if defined?(edit) && edit %>
-			<%= f.input :active %>
-		<% end %>
-		<button type="submit" class="btn btn-primary">Submit Payment</button>
-	<% end %>
+		  	<% if @cards.count == 0  %>
+		  		<%= simple_form_for(@subscription) do |f| %>
+				  <% if defined?(subscription_id) %>
+					  <%= f.input :subscription_type_id, :as => :hidden,  :input_html => {:value => subscription_id} %>
+			      <% end %>
+				  <span class="payment-errors"></span>
+				
+				  <div class="control-group">
+				    <label class="control-label">Card Number</label>
+				    <div class="controls">
+				    	<input type="text" size="20" data-stripe="number"/>
+				    </div>
+				  </div>
+				
+				  <div class="control-group">
+				    <label class="control-label">CVC</label>
+				    <div class="controls">
+				    	<input type="text" size="4" data-stripe="cvc"/>
+				    </div>
+				  </div>
+				
+				  <div class="control-group">
+				    <label class="control-label">Expiration (MM/YYYY)</label>
+				    <div class="controls">
+						<%= select_month nil, {add_month_numbers: true}, {name: nil, id: "card_month", data: {:stripe => 'exp-month' }} %>
+						<%= select_year nil, {start_year: Date.today.year, end_year: Date.today.year+15}, {name: nil, id: "card_year", data: {:stripe => 'exp-year' }}  %>	    
+					</div>
+				  </div>
+				 <button type="submit" class="btn btn-primary">Submit Payment</button>
+			 <% end %>
+		   <% else %>
+		   		<p>We have a card on file for you<br />
+		   		<% @cards.data.each do |card| %>
+		   			<%= card.type %>: <%= card.last4 %>
+		   		<% end %>
+		   		</p>
+		   		<%= simple_form_for @subscription, html: { id: :has_card } do |f| %>
+		   			<% if defined?(subscription_id) %>
+					  <%= f.input :subscription_type_id, :as => :hidden,  :input_html => {:value => subscription_id} %>
+					<% end %>
+		   			<%= f.submit %>
+		   		<% end %> <!--End form-->
+		   <% end %><%#End Card count == 0%>
+		   
+        <% else %>
+        	<%= simple_form_for @subscription do |f| %>
+	   			<% if defined?(subscription_id) %>
+				  <%= f.input :subscription_type_id, :as => :hidden,  :input_html => {:value => subscription_id} %>
+				<% end %>
+	   			<%= f.submit "Create Trial Account" %>
+	   		<% end %> <!--End form-->
+        <% end %>
+
 </div>
+
+<% if @subscription_type.price > 0 %>
 <div class="col-sm-5 col-sm-push-1">
 	<div class="well">
 		In test mode, you can use the card number <pre>4242424242424242</pre> with any CVC and a valid expiration date.
 	</div>
 </div>
+<% end %>

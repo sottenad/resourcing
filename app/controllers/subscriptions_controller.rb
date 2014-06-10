@@ -6,12 +6,15 @@ before_action :authenticate_user!
 before_filter :prevent_duplicate_subscription, :only => [:new, :create]
 
   def index
-  	@subscription_types = SubscriptionType.all
-  	@subscriptions = Subscription.all
+
+  	@subscription_types = SubscriptionType.all.order(:price)
+  	@subscription = current_user.subscription
   	@user = current_user
   end
 
   def new
+  	@user = current_user
+  	@cards = @user.get_cards
   	@subscription_type = SubscriptionType.find(params[:plan])
   	@subscription = Subscription.new
   end
@@ -22,6 +25,8 @@ before_filter :prevent_duplicate_subscription, :only => [:new, :create]
   
   def edit
   	@subscription = Subscription.find(params[:id])
+  	@subscription_type = @subscription.subscription_type
+
   end
   
   def update
@@ -35,26 +40,44 @@ before_filter :prevent_duplicate_subscription, :only => [:new, :create]
   end
   
   def create
+	session[:return_to] ||= request.referer
+	selected_subcription_type = SubscriptionType.find(params[:subscription][:subscription_type_id])
 	
 	Stripe.api_key = ENV["STRIPE_SECRET_KEY"]
-
-	# Get the credit card details submitted by the form
-	token = params[:stripeToken]
 	
 	# Create a Customer
-	customer = Stripe::Customer.create(
-	  :card => token,
-	  :plan => "basic",
-	  :email => current_user.email
-	)
-	current_user.update({:stripe_customer_id => customer.id})
-	current_user.save
+	
+		begin
+			if(!current_user.stripe_customer_id)
+				token = params[:stripeToken]
+				customer = Stripe::Customer.create(
+				  :card => token,
+				  :plan => selected_subcription_type.stripe_plan_id,
+				  :email => current_user.email
+				)
+				#Save some details to our db
+				current_user.update({:stripe_customer_id => customer.id})
+				current_user.save
+			else
+				customer = Stripe::Customer.retrieve(current_user.stripe_customer_id)
+				customer.subscriptions.create(:plan => selected_subcription_type.stripe_plan_id)
+			end
+			
+			rescue Stripe::CardError => e
+			  # The card has been declined
+			  body = e.json_body
+			  err  = body[:error]
+			  flash[:error] = "Theres been an error: " + err[:message]
+			  redirect_to session.delete(:return_to) 
+			  return
+		end
+		
+	
 	
   	@subscription = Subscription.new(subscription_params)
   	@subscription.user = current_user
   	@subscription.active = true
   	@subscription.save
-  	
   	#Check stripe initializer for webhook to record subscription_id
   	
   	if @subscription.errors.any?
@@ -65,6 +88,8 @@ before_filter :prevent_duplicate_subscription, :only => [:new, :create]
   		flash[:notice] = "Added Subscription"
   		redirect_to subscriptions_path
   	end
+  	
+  	
   end
   
   def destroy

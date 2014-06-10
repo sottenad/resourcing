@@ -3,10 +3,8 @@ class UsersController < ApplicationController
   #after_action :verify_authorized, except: [:show]
 
   def index
-  
     @users = User.all
-    @new_user = User.new()
-    
+    @new_user = User.new
     authorize @users
   end
 
@@ -30,10 +28,15 @@ class UsersController < ApplicationController
   end
   
   def create
+  	@users = User.all
     @new_user = User.new(secure_params)
-    @new_user.save
-    redirect_to users_path, :notice => "User created."
-    
+    respond_to do |format|
+      if @new_user.save
+        format.html { redirect_to users_path }
+      else
+      	format.html { render :action => "index" }
+      end
+    end
   end
 
   def destroy
@@ -50,7 +53,7 @@ class UsersController < ApplicationController
   private
 
   def secure_params
-    params.require(:user).permit(:role,:email)
+    params.require(:user).permit(:role,:email,:first_name,:last_name)
   end
 
 end

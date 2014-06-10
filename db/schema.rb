@@ -11,10 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140607042315) do
+ActiveRecord::Schema.define(version: 20140610022404) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "accounts", force: true do |t|
+    t.string   "title"
+    t.string   "subdomain"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "allocations", force: true do |t|
     t.datetime "start_date"
@@ -22,6 +29,7 @@ ActiveRecord::Schema.define(version: 20140607042315) do
     t.decimal  "hours_per_day"
     t.integer  "project_id"
     t.integer  "user_id"
+    t.integer  "account_id"
   end
 
   create_table "project_statuses", force: true do |t|
@@ -35,6 +43,7 @@ ActiveRecord::Schema.define(version: 20140607042315) do
     t.integer "budget_hours"
     t.integer "user_id"
     t.integer "project_status_id"
+    t.integer "account_id"
   end
 
   add_index "projects", ["project_status_id"], name: "index_projects_on_project_status_id", using: :btree
@@ -56,6 +65,7 @@ ActiveRecord::Schema.define(version: 20140607042315) do
     t.integer  "trial_start"
     t.integer  "trial_end"
     t.boolean  "active"
+    t.boolean  "is_free"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -63,7 +73,8 @@ ActiveRecord::Schema.define(version: 20140607042315) do
   add_index "subscriptions", ["user_id"], name: "index_subscriptions_on_user_id", unique: true, using: :btree
 
   create_table "user_groups", force: true do |t|
-    t.string "title"
+    t.string  "title"
+    t.integer "account_id"
   end
 
   create_table "user_statuses", force: true do |t|
@@ -95,6 +106,7 @@ ActiveRecord::Schema.define(version: 20140607042315) do
     t.integer  "user_status_id"
     t.integer  "subscription_id"
     t.string   "stripe_customer_id"
+    t.integer  "account_id"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

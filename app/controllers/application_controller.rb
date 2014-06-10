@@ -8,6 +8,15 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_action :configure_permitted_parameters, if: :devise_controller?
 
+
+  set_current_tenant_through_filter
+  before_filter :your_method_that_finds_the_current_tenant
+
+  def your_method_that_finds_the_current_tenant
+    current_account = Account.find(1)
+    set_current_tenant(current_account)
+  end
+  
   protected
 
   def configure_permitted_parameters

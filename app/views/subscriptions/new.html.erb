@@ -5,8 +5,11 @@
       <p><%= msg %></p>
 <% end %>
 <div class="well">
+	<div><%= raw @subscription_type.description %></div>
+	<% if @subscription_type.price > 0 %>
 	<p>Price: $<%= @subscription_type.price %>.00/Month</p>
-	<p>30 day free trial included</p>
+	<% end %>
+	
 </div>
 
 <%= render :partial => "subscriptions/form" , :locals => {:subscription_id => @subscription_type.id} %>
