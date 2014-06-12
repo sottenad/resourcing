@@ -9,7 +9,9 @@
 	<p>
 	<strong><%= a.user.email %></strong><br />
 	<%= a.project.title %> <br />
-	<%= a.duration_in_days %>
+	<%= a.duration_in_days %> Days <br />
+	Hours: <%= a.total_hours %><br />	
+	Hours/Day: <%= a.hours_per_day %>
 	</p>
 	<div class="btn-group">
 	<%= link_to 'Show', allocation_path(a), :class=>"btn btn-default btn-xs" %> 

@@ -1,22 +1,20 @@
 class User < ActiveRecord::Base
 
   validates :first_name, :last_name, :email, :presence => true
-
+  validates :password, :confirmation => true
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, 
-  #:registerable,
-   :confirmable, :recoverable, :rememberable, :trackable, :validatable
+  devise :invitable, :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable
+  
   enum role: [:user, :vip, :admin]
   
   after_initialize :set_default_role, :if => :new_record?
   before_destroy :delete_allocations
 
   has_one :user_status
-  has_one :user_group
+  belongs_to :user_group
   has_one :subscription
-  # belongs_to :account
   has_many :allocations
   
   acts_as_tenant(:account)
@@ -30,9 +28,9 @@ class User < ActiveRecord::Base
   end
   
 
-  def password_required?
-    super if confirmed?
-  end
+#  def password_required?
+#    super if confirmed?
+#  end
 
   def password_match?
     self.errors[:password] << "can't be blank" if password.blank?
@@ -42,21 +40,22 @@ class User < ActiveRecord::Base
   end
 
   # new function to set the password without knowing the current password used in our confirmation controller. 
-  def attempt_set_password(params)
-    p = {}
-    p[:password] = params[:password]
-    p[:password_confirmation] = params[:password_confirmation]
-    update_attributes(p)
-  end
+#  def attempt_set_password(params)
+#    p = {}
+#    p[:password] = params[:password]
+#    p[:password_confirmation] = params[:password_confirmation]
+#    update_attributes(p)
+#  end
+  
   # new function to return whether a password has been set
-  def has_no_password?
-    self.encrypted_password.blank?
-  end
+#  def has_no_password?
+#    self.encrypted_password.blank?
+#  end
 
   # new function to provide access to protected method unless_confirmed
-	def only_if_unconfirmed
-	  pending_any_confirmation {yield}
-	end  
+#	def only_if_unconfirmed
+#	  pending_any_confirmation {yield}
+#	end  
 	
   #To Create New Users by the Admin
   def self.create_new_user(email)

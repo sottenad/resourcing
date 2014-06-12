@@ -1,6 +1,7 @@
 class MarketingController < ApplicationController
 	  
   def index
+  	@user = User.new
   end
 
   def features
@@ -8,4 +9,5 @@ class MarketingController < ApplicationController
 
   def pricing
   end
+  
 end

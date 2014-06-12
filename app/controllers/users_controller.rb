@@ -29,7 +29,7 @@ class UsersController < ApplicationController
   
   def create
   	@users = User.all
-    @new_user = User.new(secure_params)
+    @new_user = User.invite!(secure_params)
     respond_to do |format|
       if @new_user.save
         format.html { redirect_to users_path }
@@ -53,7 +53,7 @@ class UsersController < ApplicationController
   private
 
   def secure_params
-    params.require(:user).permit(:role,:email,:first_name,:last_name)
+    params.require(:user).permit(:role,:email,:first_name,:last_name, :user_group_id)
   end
 
 end

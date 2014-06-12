@@ -55,9 +55,13 @@ class AllocationsController < ApplicationController
   	new_allocation_params[:start_date] = Date.strptime(allocation_params[:start_date],'%m/%d/%Y')
   	new_allocation_params[:end_date] = Date.strptime(allocation_params[:end_date],'%m/%d/%Y')
   	@allocation = Allocation.new(new_allocation_params)
+  	@allocation.total_hours = @allocation.duration_in_days * @allocation.hours_per_day
+  	
   	@allocation.save
   	redirect_to allocations_path
   end
+  
+
   
 	private
 		
