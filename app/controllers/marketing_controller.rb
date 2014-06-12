@@ -1,7 +1,6 @@
 class MarketingController < ApplicationController
 	  
   def index
-  	@user = User.new
   end
 
   def features

@@ -13,8 +13,10 @@ class ApplicationController < ActionController::Base
   set_current_tenant_through_filter
   before_filter :your_method_that_finds_the_current_tenant
   def your_method_that_finds_the_current_tenant
-    current_account = Account.find(1)
-    set_current_tenant(current_account)
+  	if(current_user)
+    	current_account = Account.find(current_user.account_id)
+    	set_current_tenant(current_account)
+    end
   end
   
   
@@ -23,11 +25,11 @@ class ApplicationController < ActionController::Base
 
 	def configure_permitted_parameters
 	  # Only add some parameters
-	  devise_parameter_sanitizer.for(:sign_up).concat [:first_name, :last_name, :phone, :user_group] 
-	  devise_parameter_sanitizer.for(:accept_invitation).concat [:first_name, :last_name, :phone, :user_group]
+	  devise_parameter_sanitizer.for(:sign_up).concat [:first_name, :last_name, :phone, :user_group, :account_name] 
+	  devise_parameter_sanitizer.for(:accept_invitation).concat [:first_name, :last_name, :phone, :user_group, :account_name]
 	  # Override accepted parameters
 	  devise_parameter_sanitizer.for(:accept_invitation) do |u|
-	    u.permit(:first_name, :last_name, :phone, :password, :password_confirmation, :invitation_token, :user_group)
+	    u.permit(:first_name, :last_name, :phone, :password, :password_confirmation, :invitation_token, :user_group, :account_name)
 	  end
 	end
 

@@ -20,10 +20,11 @@ Rails.application.routes.draw do
 	mount StripeEvent::Engine => '/stripe-hooks'
 	
 
-	root :to => "visitors#index"
-
+	authenticated :user do
+	  root :to => "visitors#index", :as => 'signed_in_root'
+	end
+	root :to => "marketing#index"
 	
-	#User Stuff
 
 	as :user do
 	  patch '/user/confirmation' => 'confirmations#update', :via => :patch, :as => :update_user_confirmation

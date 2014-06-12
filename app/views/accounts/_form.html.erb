@@ -1,11 +1,29 @@
+<% if @user.errors.any? %>
+    <div class="alert alert-block">
+        <ul>
+            <% @user.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+            <% end %>
+        </ul>
+    </div>
+<% end %>
+
 <%= simple_form_for(@account) do |f| %>
   <%= f.error_notification %>
 
-  <div class="form-inputs">
+  <div class="form-group">
     <%= f.input :title %>
-    <%= f.input :subdomain %>
   </div>
-
+  <div class="form-group">
+	  <%= simple_fields_for(:user) do |u| %>
+	  <%= u.error_notification %>
+	  	<%= u.input :email %>
+	  	<%= u.input :first_name %>
+	  	<%= u.input :last_name %>
+	  	<%= u.input :password %>
+	  	<%= u.input :password_confirmation %>
+	  <% end %>
+  </div>
   <div class="form-actions">
     <%= f.button :submit %>
   </div>

@@ -17,11 +17,12 @@ class User < ActiveRecord::Base
   has_one :subscription
   has_many :allocations
   
+  belongs_to :account
   acts_as_tenant(:account)
 
   def delete_allocations
   	Allocation.destroy_all(:user => self)
-  end
+  end	
   
   def set_default_role
     self.role ||= :user
