@@ -8,23 +8,34 @@
     </div>
 <% end %>
 
-<%= simple_form_for(@account) do |f| %>
+<%= simple_form_for @account, :html => { :role => 'form'} do |f| %>
   <%= f.error_notification %>
 
-  <div class="form-group">
-    <%= f.input :title %>
-  </div>
-  <div class="form-group">
+	  <div class="form-group">
+	    <%= f.input :title, :autofocus => true, class: 'form-control'%>
+	  </div>
+  
 	  <%= simple_fields_for(:user) do |u| %>
 	  <%= u.error_notification %>
-	  	<%= u.input :email %>
-	  	<%= u.input :first_name %>
-	  	<%= u.input :last_name %>
-	  	<%= u.input :password %>
-	  	<%= u.input :password_confirmation %>
+	  	<div class="form-group">
+	  		<%= u.input :email, class: 'form-control' %>
+	  	</div>
+	  	<div class="form-group">
+	  		<%= u.input :first_name, class: 'form-control' %>
+	  	</div>
+	  	<div class="form-group">
+	  		<%= u.input :last_name, class: 'form-control' %>
+	  	</div>
+	  	<div class="form-group">
+	  		<%= u.input :password, class: 'form-control' %>
+	  	</div>
+	  	<div class="form-group">
+	  		<%= u.input :password_confirmation, class: 'form-control' %>
+	  	</div>
 	  <% end %>
-  </div>
-  <div class="form-actions">
-    <%= f.button :submit %>
-  </div>
+
+	  <div class="form-actions">
+	    <%= f.button :submit, :class=> "btn btn-primary" %>
+	  </div>
+</div>
 <% end %>

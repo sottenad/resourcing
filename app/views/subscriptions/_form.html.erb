@@ -3,7 +3,7 @@
 	
 		  <% if @subscription_type.price > 0 %>
 		  
-		  	<% if @cards.count == 0  %>
+		  	<% if @cards.nil? || @cards.count == 0  %>
 		  		<%= simple_form_for(@subscription) do |f| %>
 				  <% if defined?(subscription_id) %>
 					  <%= f.input :subscription_type_id, :as => :hidden,  :input_html => {:value => subscription_id} %>

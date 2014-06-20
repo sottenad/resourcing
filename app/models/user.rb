@@ -66,9 +66,13 @@ class User < ActiveRecord::Base
   
   #Get this users card(s)
   def get_cards
+  	if (!stripe_customer_id.nil?)
 	  customer = Stripe::Customer.retrieve(stripe_customer_id)
 	  puts customer.cards
 	  return customer.cards
+	else
+		return nil
+	end
   end
 	
 end

@@ -1,6 +1,6 @@
 class AllocationsController < ApplicationController
   before_filter :authenticate_user!
-  before_filter :ensure_subscription
+  #before_filter :ensure_subscription
   
   def index	
   	if(params[:email].nil?)

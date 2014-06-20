@@ -5,8 +5,40 @@
 $primary-color:#A4DFDA;
 
 header{
-	background-color:$primary-color;
-	padding:20px;
+	#background-color:$primary-color;
+
+}
+
+
+.navbar{
+	min-height:60px;
+	padding-top:15px;
+	margin:0;
+	background-color: #fff;
+	border-color: #e7e7e7;
+}
+.navbar .btn{
+
+}
+
+.hero{
+	background: #f9f8f8;
+	padding:40px 0;
+	margin-bottom:40px;
+}
+
+/*Btn Overrides*/
+.navbar-default .btn-cta{
+	border-radius: 0px;
+	padding:5px 15px;
+	margin-right:20px;
+}
+.navbar-default .btn-cta.btn-success{
+	color:#fff;
+}
+.navbar-default .btn-cta.btn-success:hover{
+	background:#4cae4c;
+	color:#fff;
 }
 
 main{

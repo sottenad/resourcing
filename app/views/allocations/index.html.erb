@@ -4,6 +4,16 @@
 		<%= collection_select(:email, :value, @all_users, :email, :email, :selected => @selected_email) %>
 		<input type="submit" value="Filter" />
 	</form>
+<%= month_calendar events: @allocations do |date, allocations| %>
+  <%= date %>
+
+  <% allocations.each do |allocation| %>
+    <div>
+      <%= allocation.user.first_name %>
+    </div>
+  <% end %>
+<% end %>
+	
 <% @allocations.each do |a| %>
 <div class="col-sm-2">
 	<p>

@@ -25,6 +25,8 @@ gem 'stripe', :git => 'https://github.com/stripe/stripe-ruby'
 gem 'stripe_event'
 gem 'acts_as_tenant'
 
+gem "simple_calendar", "~> 1.1.0"
+
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller', :platforms=>[:mri_21]
