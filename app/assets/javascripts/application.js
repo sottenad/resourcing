@@ -17,4 +17,7 @@
 //= require bootstrap
 //= require moment
 //= require bootstrap-datepicker
+//= require angular
+//= require handlebars-v1.3.0
 //= require_tree .
+

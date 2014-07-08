@@ -32,4 +32,12 @@ Rails.application.routes.draw do
 	devise_for :users, :controllers => { :confirmations => "confirmations" }
 	resources :users
 
+	namespace :api do
+		
+	    get 'allocations'
+	    get 'users'
+	    
+	  
+	end
+
 end

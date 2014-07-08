@@ -9,4 +9,5 @@ class Allocation < ActiveRecord::Base
 		return duration
 		
 	end
+
 end

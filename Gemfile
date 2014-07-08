@@ -8,7 +8,7 @@ gem 'jquery-rails'
 gem 'turbolinks'
 gem 'jquery-turbolinks'
 
-gem 'jbuilder', '~> 2.0'
+gem 'rabl'
 gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'spring',        group: :development
 gem 'bootstrap-sass'
@@ -25,7 +25,7 @@ gem 'stripe', :git => 'https://github.com/stripe/stripe-ruby'
 gem 'stripe_event'
 gem 'acts_as_tenant'
 
-gem "simple_calendar", "~> 1.1.0"
+gem 'angularjs-rails'
 
 group :development do
   gem 'better_errors'

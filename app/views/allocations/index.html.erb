@@ -1,33 +1,43 @@
-<h1>Allocations</h1>
-
-	<form class="filter_form">
-		<%= collection_select(:email, :value, @all_users, :email, :email, :selected => @selected_email) %>
-		<input type="submit" value="Filter" />
-	</form>
-<%= month_calendar events: @allocations do |date, allocations| %>
-  <%= date %>
-
-  <% allocations.each do |allocation| %>
-    <div>
-      <%= allocation.user.first_name %>
-    </div>
-  <% end %>
-<% end %>
-	
-<% @allocations.each do |a| %>
-<div class="col-sm-2">
-	<p>
-	<strong><%= a.user.email %></strong><br />
-	<%= a.project.title %> <br />
-	<%= a.duration_in_days %> Days <br />
-	Hours: <%= a.total_hours %><br />	
-	Hours/Day: <%= a.hours_per_day %>
-	</p>
-	<div class="btn-group">
-	<%= link_to 'Show', allocation_path(a), :class=>"btn btn-default btn-xs" %> 
-	<%= link_to "Delete", a, :method=>:delete, :class=>"btn btn-default btn-xs" %>
+<div class="row">
+	<div class="col-sm-10">
+		<h2>Allocations</h2>	
+	</div>
+	<div class="col-sm-2">
+		<%= link_to "New Allocation", new_allocation_path, :class=>"btn btn-primary btn-sm" %>
 	</div>
 </div>
-<% end %>
 
-<%= link_to "New Allocation", new_allocation_path %>
+
+
+
+<div class="row">	
+		<div class="gridSlider">
+			<!--Calendar -->
+		</div>
+
+</div>
+
+
+
+<script id="sliderTemplate" type="text/x-handlebars-template">	
+	{{#each .}}
+		<div class="userRow row">
+			<div class="col-sm-3">
+				<div class="userBlock">
+					{{user.display_name}}
+				</div>
+			</div>
+			<div class="col-sm-9">
+				<div class="userAllocations">
+						{{#each user.allocations}}
+							<div class="userAllocation" data-start="{{allocation.start_date}}" data-end="{{allocation.end_date}}" data-duration="{{allocation.duration_in_days}}">
+								{{allocation.project.title}}
+							</div>
+						{{/each}}
+					</ul>
+				</div>
+			</div>
+		</div>
+	{{/each}}
+</script>
+

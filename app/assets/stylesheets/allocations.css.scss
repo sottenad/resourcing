@@ -1,3 +1,17 @@
 // Place all the styles related to the allocations controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.userBlock{
+	height:auto;
+	padding:15px;
+}
+
+.userAllocations{
+	padding:5px;
+	border-left:1px #ddd dotted;
+}
+
+.userRow{
+	border-bottom:1px #ddd dotted;
+}

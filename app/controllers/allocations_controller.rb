@@ -3,21 +3,23 @@ class AllocationsController < ApplicationController
   #before_filter :ensure_subscription
   
   def index	
-  	if(params[:email].nil?)
-  		@allocations = Allocation.all.includes(:user).order("users.email desc")
-  		@email_selected = User.first.email
-  	else
-  		@allocations = Allocation.joins(:user).where("users.email = ?", params[:email][:value])  	
-  		@email_selected = params[:email][:value]
-  	end
+#   	if(params[:email].nil?)
+#   		@allocations = Allocation.all.includes(:user).order("users.email desc").group("allocations.id, users.id, users.email")
+#   		@email_selected = User.first.email
+#   	else
+#   		@allocations = Allocation.joins(:user).where("users.email = ?", params[:email][:value])  	
+#   		@email_selected = params[:email][:value]
+#   	end
   	
+  	@allocations = User.all.uniq.includes(:allocations)
   	@all_users = User.all.uniq
   	@all_projects = Project.all
   	
-  	respond_to do |format|
-  		format.html
-  		format.json {render json:@allocations}
-  	end
+  	
+  end
+  
+  def getallocations
+  	
   end
 
 
